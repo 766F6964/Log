@@ -1,0 +1,11 @@
+# Blacklist everything
+*/**
+
+# Whitelist config, build and debug scripts
+!.gitignore
+!Makefile
+
+# Whitelist the sourcecode
+!*.c
+!*.h
+!*.md
