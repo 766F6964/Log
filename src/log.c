@@ -5,8 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-// ToDo: Flag to log to file
-// ToDo: Flag to suppress stdout and only log to file
 bool time_prefix = false;
 bool colored_prefix = true;
 bool log_mode_file = false;
@@ -60,8 +58,8 @@ char *__get_tag_color(char *tag)
 struct tm *__get_timestamp()
 {
     time_t current_time = time((time_t *) NULL);
-    struct tm *t = localtime(&current_time);
-    return t;
+    struct tm *time_info = localtime(&current_time);
+    return time_info;
 }
 
 log_entry *__format_log_entry(const char *tag, const char *format_string, va_list args)
@@ -154,8 +152,8 @@ void __log_message(const char *tag, const char *format_string, va_list args)
         return;
     }
 
-    if (log_mode_stdout) { __write_log_to_stdout(entry); }
     if (log_mode_file) { __write_log_to_file(entry); }
+    if (log_mode_stdout) { __write_log_to_stdout(entry); }
 
     free(entry->timestamp);
     free(entry->tag);
