@@ -1,5 +1,6 @@
 COMPILER = gcc
-COMPILER_FLAGS = -g -Wall -Werror -Wextra 
+COMPILER_FLAGS = -g -Wall -Werror -Wextra
+#COMPILER_FLAGS = -g
 LINKER_FLAGS = -lncursesw -lm
 
 PROG_NAME = log

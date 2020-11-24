@@ -4,6 +4,27 @@
 #include <stdbool.h>
 #include <stdarg.h>
 
+typedef struct
+{
+    char *tag;
+    char *message;
+    char *timestamp;
+} log_entry;
+
+typedef enum log_type
+{
+    STDOUT  = 0x1,
+    LOGFILE = 0x2
+} log_type;
+
+// ToDo: Introduce some data structure to store all log_entries
+
+/**
+ * Sets where the logs will be written (stdout or file)
+ * @param type The log type to enable writing for
+ */
+void log_set_mode(log_type type);
+
 /**
  * Configure the logger to prefix every log message with a timestamp
  * @param toggle if true, timestamp is used, false otherwise
@@ -17,18 +38,51 @@ void log_use_time_prefix(bool toggle);
 void log_use_colored_prefix(bool toggle);
 
 /**
- * Prints the current timestamp with the format hh:mm:ss
+ * Gets a pointer to the time struct for the the current time
+ * @return The time struct
  */
-void __log_print_time_prefix();
+struct tm* __get_timestamp();
+
+/**
+ * Sets the name of the log file
+ * @param filename The log file name
+ */
+void log_set_filename(char *filename);
+
+/**
+ * Writes a formatted log entry to the log file, if enabled via flags
+ * @param entry The log entry to write
+ */
+void __write_log_to_file(log_entry *entry);
+
+/**
+ * Writes a formatted log entry to stdout, if enabled via flags
+ * @param entry The log entry to write
+ */
+void __write_log_to_stdout(log_entry *entry);
+
+/**
+ * Returns the ANSI color code for a given tag name.
+ * @param tag The tag identifying the log type
+ * @return The ANSI color code
+ */
+char *__get_tag_color(char *tag);
 
 /**
  * Formats all logging messages
- * @param color The color code to use, if color highlighting is enabled
  * @param tag The tag indicating the log type
  * @param format_string The format string holding all the variadic arguments
  * @param arg The arguments for formatting the log message
  */
-void __log_general(const char *color, const char *tag, const char *format_string, va_list *arg);
+log_entry *__format_log_entry(const char *tag, const char *format_string, va_list arg);
+
+/**
+ * Write a formatted log message to either stdout or to a file, depending on the flags set.
+ * @param tag The tag indicating the log type
+ * @param format_string The format string holding all the variadic arguments
+ * @param args The arguments for formatting the log message
+ */
+void __log_message(const char *tag ,const char *format_string, va_list args);
 
 /**
  * Print a logging message indicating a warning
