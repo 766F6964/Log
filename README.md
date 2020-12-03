@@ -12,7 +12,9 @@ Log is a compact logging library with an easy to use API, written in C.
 - Optional prefixes:
     - Colorized logging type prefix
     - Timestamp prefix
-    
+- Minimal footprint (No external dependencies)
+
+
 ## Usage
 
 An example demonstrating how to log formatted messages to stdout, while having time prefixes and colorized logging type prefixes:
@@ -40,3 +42,5 @@ int main()
     return 0;
 }
 ```
+
+![](https://i.imgur.com/4JwJK8E.png)
