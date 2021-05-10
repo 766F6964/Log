@@ -10,6 +10,12 @@ bool colored_prefix = true;
 bool log_mode_file = false;
 bool log_mode_stdout = false;
 char *log_filename = "log.txt";
+bool log_short_prefix = false;
+
+void log_use_short_prefix(bool toggle)
+{
+    log_short_prefix = toggle;
+}
 
 void log_use_time_prefix(bool toggle)
 {
@@ -47,10 +53,10 @@ void log_set_mode(log_type type)
 
 char *__get_tag_color(char *tag)
 {
-    if (strcmp(tag, "INFO") == 0) { return "\033[1;34m"; }
-    if (strcmp(tag, "WARN") == 0) { return "\033[1;33m"; }
-    if (strcmp(tag, "PASS") == 0) { return "\033[1;32m"; }
-    if (strcmp(tag, "FAIL") == 0) { return "\033[1;31m"; }
+    if ((strcmp(tag, "INFO") == 0) || (strcmp(tag, "*") == 0)) { return "\033[1;34m"; }
+    if ((strcmp(tag, "WARN") == 0) || (strcmp(tag, "!") == 0)) { return "\033[1;33m"; }
+    if ((strcmp(tag, "PASS") == 0) || (strcmp(tag, "+") == 0)) { return "\033[1;32m"; }
+    if ((strcmp(tag, "FAIL") == 0) || (strcmp(tag, "-") == 0)) { return "\033[1;31m"; }
 
     return "\033[0m"; // Reset color
 }
@@ -169,7 +175,10 @@ void log_info(const char *format_string, ...)
     va_list args;
     va_start(args, format_string);
 
-    __log_message("INFO", format_string, args);
+    if (log_short_prefix)
+        __log_message("*", format_string, args);
+    else
+        __log_message("INFO", format_string, args);
 
     va_end(args);
 }
@@ -179,7 +188,10 @@ void log_warning(const char *format_string, ...)
     va_list args;
     va_start(args, format_string);
 
-    __log_message("WARN", format_string, args);
+    if (log_short_prefix)
+        __log_message("!", format_string, args);
+    else
+        __log_message("WARN", format_string, args);
 
     va_end(args);
 }
@@ -189,7 +201,10 @@ void log_success(const char *format_string, ...)
     va_list args;
     va_start(args, format_string);
 
-    __log_message("PASS", format_string, args);
+    if (log_short_prefix)
+        __log_message("+", format_string, args);
+    else
+        __log_message("PASS", format_string, args);
 
     va_end(args);
 }
@@ -199,7 +214,10 @@ void log_error(const char *format_string, ...)
     va_list args;
     va_start(args, format_string);
 
-    __log_message("FAIL", format_string, args);
+        if (log_short_prefix)
+        __log_message("-", format_string, args);
+    else
+        __log_message("FAIL", format_string, args);
 
     va_end(args);
 }

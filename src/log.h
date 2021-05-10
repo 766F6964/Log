@@ -26,6 +26,12 @@ typedef enum log_type
 void log_set_mode(log_type type);
 
 /**
+ * Configure the logger to use a short prefix (e.g. [*] instead of [INFO])
+ * @param toggle if true, the short prefix is used, false otherwise
+ */ 
+void log_use_short_prefix(bool toggle);
+
+/**
  * Configure the logger to prefix every log message with a timestamp
  * @param toggle if true, timestamp is used, false otherwise
  */

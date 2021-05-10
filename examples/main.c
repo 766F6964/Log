@@ -4,6 +4,7 @@ int main()
 {
     // Configure logger
     log_use_time_prefix(true);
+    log_use_short_prefix(false);
     log_use_colored_prefix(true);
     log_set_mode(STDOUT);
 
@@ -11,7 +12,7 @@ int main()
     log_success("Dataset loaded successfully");
 
     log_info("Generating datastructure from dataset ...");
-    log_warning("Data entry at offset %#08x with value: %s uses invalid ", 20, "test");
+    log_warning("Data entry at offset %#08x with value: %s uses invalid offset.", 20, "test");
     log_warning("Data structure created with %d error(s)", 1);
 
     log_info("Serializing datastructure ...");

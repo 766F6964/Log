@@ -11,6 +11,7 @@ Log is a compact logging library with an easy to use API, written in C.
 - Flexible formatting of logging messages (printf wrapping)
 - Optional prefixes:
     - Colorized logging type prefix
+    - Shortform prefix
     - Timestamp prefix
 - Minimal footprint (No external dependencies)
 
