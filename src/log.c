@@ -100,7 +100,7 @@ log_entry *__format_log_entry(const char *tag, const char *format_string, va_lis
 
         // Assign to struct
         strftime(entry->timestamp, timestamp_size, "%H:%M:%S", __get_timestamp());
-        snprintf(entry->tag, tag_size, tag);
+        snprintf(entry->tag, tag_size, "%s", tag);
         vsnprintf(entry->message, message_size, format_string, args);
 
     } while (false);
