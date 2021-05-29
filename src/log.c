@@ -57,6 +57,7 @@ char *__get_tag_color(char *tag)
     if ((strcmp(tag, "WARN") == 0) || (strcmp(tag, "!") == 0)) { return "\033[1;33m"; }
     if ((strcmp(tag, "PASS") == 0) || (strcmp(tag, "+") == 0)) { return "\033[1;32m"; }
     if ((strcmp(tag, "FAIL") == 0) || (strcmp(tag, "-") == 0)) { return "\033[1;31m"; }
+    if ((strcmp(tag, "PANIC") == 0) || (strcmp(tag, "x") == 0)) { return "\033[1;31m"; }
 
     return "\033[0m"; // Reset color
 }
@@ -214,10 +215,25 @@ void log_error(const char *format_string, ...)
     va_list args;
     va_start(args, format_string);
 
-        if (log_short_prefix)
+    if (log_short_prefix)
         __log_message("-", format_string, args);
     else
         __log_message("FAIL", format_string, args);
+
+    va_end(args);
+}
+
+void log_panic(int exitcode, const char *format_string, ...)
+{
+    va_list args;
+    va_start(args, format_string);
+
+    if (log_short_prefix)
+        __log_message("x", format_string, args);
+    else
+        __log_message("PANIC", format_string, args);
+
+    exit(exitcode);
 
     va_end(args);
 }

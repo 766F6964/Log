@@ -6,7 +6,7 @@
 Log is a compact logging library with an easy to use API, written in C.
 
 ## Features
-- Various logging types (success, error, warning, info)
+- Various logging types (success, error, warning, info, panic)
 - Allows logging to stdout or to a file
 - Flexible formatting of logging messages (printf wrapping)
 - Optional prefixes:
@@ -14,7 +14,6 @@ Log is a compact logging library with an easy to use API, written in C.
     - Shortform prefix
     - Timestamp prefix
 - Minimal footprint (No external dependencies)
-
 
 ## Usage
 
